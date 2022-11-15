@@ -7,7 +7,7 @@ function App() {
   const [display, setDisplay] = useState("0");
 
   return (
-    <div className="container">
+    <div className="containerApp">
       <Display display={display} setDisplay={setDisplay} />
       <Calc display={display} setDisplay={setDisplay} />
     </div>

@@ -17,9 +17,15 @@ function Calc(props) {
 
   //Debugging for secondValue change.
   useEffect(() => {
-    console.log(secondValue);
+    console.log("lol: " + secondValue);
     props.setDisplay(secondValue);
   }, [secondValue]);
+
+  useEffect(() => {
+    console.log("new operator: " + operator);
+
+    console.log("new second value: " + secondValue);
+  }, [operator]);
 
   //Anything before the operator is the "first value." This will continue to be set in the
   //firstValue setter of the useState. After the operator, it will add onto the secondValue's setter.
@@ -85,18 +91,15 @@ function Calc(props) {
   //making the application unusable.
   return (
     <div className="calculator">
-      {/* <input
-        type="text"
-        className="calculator-screen"
-        value={calculation()}
-        disabled
-      /> */}
       <div className="calculator-keys">
         <button
           type="button"
           className="operator"
           value="+"
-          onClick={(e) => setOperator(e.target.value)}
+          onClick={(e) => {
+            setOperator(e.target.value);
+            setSecondValue("");
+          }}
         >
           +
         </button>
@@ -104,7 +107,10 @@ function Calc(props) {
           type="button"
           className="operator"
           value="-"
-          onClick={(e) => setOperator(e.target.value)}
+          onClick={(e) => {
+            setOperator(e.target.value);
+            setSecondValue("");
+          }}
         >
           -
         </button>
@@ -112,7 +118,10 @@ function Calc(props) {
           type="button"
           className="operator"
           value="*"
-          onClick={(e) => setOperator(e.target.value)}
+          onClick={(e) => {
+            setOperator(e.target.value);
+            setSecondValue("");
+          }}
         >
           &times;
         </button>
@@ -120,7 +129,10 @@ function Calc(props) {
           type="button"
           className="operator"
           value="/"
-          onClick={(e) => setOperator(e.target.value)}
+          onClick={(e) => {
+            setOperator(e.target.value);
+            setSecondValue("");
+          }}
         >
           &divide;
         </button>
@@ -218,7 +230,6 @@ function Calc(props) {
             console.log("Your calculation is: " + calculation());
             setFirstValue(calculation());
             setOperator("");
-
             setDecimalOne(0);
             setDecimalTwo(0);
           }}
