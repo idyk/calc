@@ -7,10 +7,11 @@ function Calc(props) {
   const [operator, setOperator] = useState("");
   const [decimalOne, setDecimalOne] = useState(0);
   const [decimalTwo, setDecimalTwo] = useState(0);
+  const [calculationVal, setCalculationVal] = useState("");
 
   //Debugging for firstValue change.
   useEffect(() => {
-    console.log(firstValue);
+    console.log("First value is: " + firstValue);
     props.setDisplay(firstValue);
   }, [firstValue]);
 
@@ -23,7 +24,7 @@ function Calc(props) {
   //Anything before the operator is the "first value." This will continue to be set in the
   //firstValue setter of the useState. After the operator, it will add onto the secondValue's setter.
   function setValue(value) {
-    if (operator === "") {
+    if (operator === "" && calculationVal === "") {
       if (value === "." && decimalOne > 0) {
         console.log("Ignore decimal in first. Do nothing.");
       } else if (value === "." && decimalOne === 0) {
@@ -35,7 +36,6 @@ function Calc(props) {
         setFirstValue(firstValue + value);
       }
     }
-
     if (operator) {
       if (value === "." && decimalTwo > 0) {
         console.log("Ignore decimal in second. Do nothing.");
@@ -56,14 +56,19 @@ function Calc(props) {
     console.log("second value: " + secondValue);
     console.log("operator: " + operator);
     if (operator === "+") {
+      setCalculationVal(Number(firstValue) + Number(secondValue));
       return Number(firstValue) + Number(secondValue);
     } else if (operator === "-") {
+      setCalculationVal(Number(firstValue) - Number(secondValue));
       return Number(firstValue) - Number(secondValue);
     } else if (operator === "*") {
+      setCalculationVal(Number(firstValue) * Number(secondValue));
       return Number(firstValue) * Number(secondValue);
     } else if (operator === "/") {
+      setCalculationVal(Number(firstValue) / Number(secondValue));
       return Number(firstValue) / Number(secondValue);
     } else {
+      setCalculationVal(Number(firstValue));
       return Number(firstValue);
     }
   }
@@ -211,8 +216,11 @@ function Calc(props) {
           value="="
           onClick={() => {
             console.log("Your calculation is: " + calculation());
-            setSecondValue("");
             setFirstValue(calculation());
+            setOperator("");
+
+            setDecimalOne(0);
+            setDecimalTwo(0);
           }}
         >
           =
