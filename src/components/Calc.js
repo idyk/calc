@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 function Calc() {
-  let holdFirst = "";
-  let holdSecond = "";
-
   const [firstValue, setFirstValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
   const [operator, setOperator] = useState("");
@@ -66,6 +63,7 @@ function Calc() {
     setFirstValue("");
     setSecondValue("");
     setOperator("");
+    console.log("Values reset!");
   }
 
   return (
@@ -187,7 +185,12 @@ function Calc() {
         >
           .
         </button>
-        <button type="button" className="all-clear" value="all-clear">
+        <button
+          type="button"
+          className="all-clear"
+          value="all-clear"
+          onClick={() => reset()}
+        >
           AC
         </button>
         <button
@@ -197,7 +200,8 @@ function Calc() {
           value="="
           onClick={() => {
             console.log("Your calculation is: " + calculation());
-            reset();
+            setSecondValue("");
+            setFirstValue(calculation());
           }}
         >
           =
