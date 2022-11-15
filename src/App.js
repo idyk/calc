@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div className="container">
-      {/* <Display display={display} setDisplay={setDisplay} /> */}
+      <Display display={display} setDisplay={setDisplay} />
       <Calc display={display} setDisplay={setDisplay} />
     </div>
   );

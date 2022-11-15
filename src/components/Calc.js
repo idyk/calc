@@ -11,11 +11,13 @@ function Calc(props) {
   //Debugging for firstValue change.
   useEffect(() => {
     console.log(firstValue);
+    props.setDisplay(firstValue);
   }, [firstValue]);
 
   //Debugging for secondValue change.
   useEffect(() => {
     console.log(secondValue);
+    props.setDisplay(secondValue);
   }, [secondValue]);
 
   //Anything before the operator is the "first value." This will continue to be set in the
@@ -32,10 +34,8 @@ function Calc(props) {
         console.log("Non decimal value.");
         setFirstValue(firstValue + value);
       }
-      console.log("props should have been set!");
-      props.setDisplay(Number(firstValue));
-      console.log("supposed props value: " + props.display);
     }
+
     if (operator) {
       if (value === "." && decimalTwo > 0) {
         console.log("Ignore decimal in second. Do nothing.");
@@ -48,7 +48,6 @@ function Calc(props) {
         setSecondValue(secondValue + value);
       }
     }
-    props.setDisplay(secondValue);
   }
 
   //Called when Equal is pressed.
@@ -81,12 +80,12 @@ function Calc(props) {
   //making the application unusable.
   return (
     <div className="calculator">
-      <input
+      {/* <input
         type="text"
         className="calculator-screen"
         value={calculation()}
         disabled
-      />
+      /> */}
       <div className="calculator-keys">
         <button
           type="button"
