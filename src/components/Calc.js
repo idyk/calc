@@ -7,6 +7,8 @@ function Calc() {
   const [firstValue, setFirstValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
   const [operator, setOperator] = useState("");
+  const [decimalOne, setDecimalOne] = useState(0);
+  const [decimalTwo, setDecimalTwo] = useState(0);
 
   useEffect(() => {
     console.log(firstValue);
@@ -20,10 +22,28 @@ function Calc() {
   //firstValue setter of the useState. After the operator, it will add onto the secondValue's setter.
   function setValue(value) {
     if (operator === "") {
-      setFirstValue(firstValue + value);
+      if (value === "." && decimalOne > 0) {
+        console.log("Ignore decimal in first. Do nothing.");
+      } else if (value === "." && decimalOne == 0) {
+        console.log("Decimal in first seen.");
+        setFirstValue(firstValue + value);
+        setDecimalOne(1);
+      } else {
+        console.log("Non decimal value.");
+        setFirstValue(firstValue + value);
+      }
     }
     if (operator) {
-      setSecondValue(secondValue + value);
+      if (value === "." && decimalTwo > 0) {
+        console.log("Ignore decimal in second. Do nothing.");
+      } else if (value === "." && decimalTwo == 0) {
+        console.log("Decimal in second seen.");
+        setSecondValue(secondValue + value);
+        setDecimalTwo(1);
+      } else {
+        console.log("Non decimal value.");
+        setSecondValue(secondValue + value);
+      }
     }
   }
 
@@ -159,7 +179,12 @@ function Calc() {
         >
           0
         </button>
-        <button type="button" className="decimal" value=".">
+        <button
+          type="button"
+          className="decimal"
+          value="."
+          onClick={(e) => setValue(e.target.value)}
+        >
           .
         </button>
         <button type="button" className="all-clear" value="all-clear">
