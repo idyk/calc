@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 
-function Calc() {
+function Calc(props) {
+  //useStates.
   const [firstValue, setFirstValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
   const [operator, setOperator] = useState("");
   const [decimalOne, setDecimalOne] = useState(0);
   const [decimalTwo, setDecimalTwo] = useState(0);
 
+  //Debugging for firstValue change.
   useEffect(() => {
     console.log(firstValue);
   }, [firstValue]);
 
+  //Debugging for secondValue change.
   useEffect(() => {
     console.log(secondValue);
   }, [secondValue]);
@@ -21,7 +24,7 @@ function Calc() {
     if (operator === "") {
       if (value === "." && decimalOne > 0) {
         console.log("Ignore decimal in first. Do nothing.");
-      } else if (value === "." && decimalOne == 0) {
+      } else if (value === "." && decimalOne === 0) {
         console.log("Decimal in first seen.");
         setFirstValue(firstValue + value);
         setDecimalOne(1);
@@ -29,11 +32,14 @@ function Calc() {
         console.log("Non decimal value.");
         setFirstValue(firstValue + value);
       }
+      console.log("props should have been set!");
+      props.setDisplay(Number(firstValue));
+      console.log("supposed props value: " + props.display);
     }
     if (operator) {
       if (value === "." && decimalTwo > 0) {
         console.log("Ignore decimal in second. Do nothing.");
-      } else if (value === "." && decimalTwo == 0) {
+      } else if (value === "." && decimalTwo === 0) {
         console.log("Decimal in second seen.");
         setSecondValue(secondValue + value);
         setDecimalTwo(1);
@@ -42,8 +48,10 @@ function Calc() {
         setSecondValue(secondValue + value);
       }
     }
+    props.setDisplay(secondValue);
   }
 
+  //Called when Equal is pressed.
   function calculation() {
     console.log("first value: " + firstValue);
     console.log("second value: " + secondValue);
@@ -56,9 +64,12 @@ function Calc() {
       return Number(firstValue) * Number(secondValue);
     } else if (operator === "/") {
       return Number(firstValue) / Number(secondValue);
+    } else {
+      return Number(firstValue);
     }
   }
 
+  //Used for the all clear button.
   function reset() {
     setFirstValue("");
     setSecondValue("");
@@ -66,10 +77,16 @@ function Calc() {
     console.log("Values reset!");
   }
 
+  //On click functions need arrow functions, otherwise they will infinitely rerender,
+  //making the application unusable.
   return (
     <div className="calculator">
-      <input type="text" className="calculator-screen" value="" disabled />
-
+      <input
+        type="text"
+        className="calculator-screen"
+        value={calculation()}
+        disabled
+      />
       <div className="calculator-keys">
         <button
           type="button"
@@ -185,12 +202,7 @@ function Calc() {
         >
           .
         </button>
-        <button
-          type="button"
-          className="all-clear"
-          value="all-clear"
-          onClick={() => reset()}
-        >
+        <button type="button" className="all-clear" onClick={() => reset()}>
           AC
         </button>
         <button
