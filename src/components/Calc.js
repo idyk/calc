@@ -1,40 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Calc() {
   let holdFirst = "";
   let holdSecond = "";
 
-  const [firstValue, setFirstValue] = useState();
-  const [secondValue, setSecondValue] = useState();
+  const [firstValue, setFirstValue] = useState("");
+  const [secondValue, setSecondValue] = useState("");
   const [operator, setOperator] = useState("");
 
+  useEffect(() => {
+    console.log(firstValue);
+  }, [firstValue]);
+
+  useEffect(() => {
+    console.log(secondValue);
+  }, [secondValue]);
+
+  //Anything before the operator is the "first value." This will continue to be set in the
+  //firstValue setter of the useState. After the operator, it will add onto the secondValue's setter.
   function setValue(value) {
-    if (operator == "") {
-      holdFirst += value;
-      console.log("firstValue: " + holdFirst);
-    } else if (operator) {
-      holdSecond += value;
-      console.log("secondValue: " + holdSecond);
+    if (operator === "") {
+      setFirstValue(firstValue + value);
+    }
+    if (operator) {
+      setSecondValue(secondValue + value);
     }
   }
 
   function calculation() {
-    setFirstValue(parseFloat(holdFirst));
-    setSecondValue(parseFloat(holdSecond));
+    console.log("first value: " + firstValue);
+    console.log("second value: " + secondValue);
+    console.log("operator: " + operator);
     if (operator === "+") {
       return Number(firstValue) + Number(secondValue);
     } else if (operator === "-") {
-      return firstValue - secondValue;
+      return Number(firstValue) - Number(secondValue);
     } else if (operator === "*") {
-      return firstValue * secondValue;
+      return Number(firstValue) * Number(secondValue);
     } else if (operator === "/") {
-      return firstValue / secondValue;
+      return Number(firstValue) / Number(secondValue);
     }
   }
 
   function reset() {
-    setFirstValue(null);
-    setSecondValue(null);
+    setFirstValue("");
+    setSecondValue("");
     setOperator("");
   }
 
