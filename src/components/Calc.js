@@ -17,14 +17,13 @@ function Calc(props) {
 
   //Debugging for secondValue change.
   useEffect(() => {
-    console.log("lol: " + secondValue);
+    console.log("Second value is: " + secondValue);
     props.setDisplay(secondValue);
   }, [secondValue]);
 
+  //Debugging for operator change.
   useEffect(() => {
-    console.log("new operator: " + operator);
-
-    console.log("new second value: " + secondValue);
+    console.log("New operator: " + operator);
   }, [operator]);
 
   //Anything before the operator is the "first value." This will continue to be set in the
@@ -56,7 +55,7 @@ function Calc(props) {
     }
   }
 
-  //Called when Equal is pressed.
+  //Called when Equal is pressed. Both return and set exist because it helped when debugging.
   function calculation() {
     console.log("first value: " + firstValue);
     console.log("second value: " + secondValue);
@@ -88,7 +87,7 @@ function Calc(props) {
   }
 
   //On click functions need arrow functions, otherwise they will infinitely rerender,
-  //making the application unusable.
+  //making the application unusable. Each key sends its event over except = and reset.
   return (
     <div className="calculator">
       <div className="calculator-keys">
